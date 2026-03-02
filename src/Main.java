@@ -1,13 +1,67 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-  //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-  // to see how IntelliJ IDEA suggests fixing it.
-  IO.println(String.format("Hello and welcome!"));
+import java.util.*;
+import java.util.stream.Collectors;
+public class Main {
+  public static void main(String[] args) {
 
-  for (int i = 1; i <= 5; i++) {
-    //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-    // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-    IO.println("i = " + i);
+    Scanner scanner = new Scanner(System.in);
+    List<Person> people = new ArrayList<>();
+
+    System.out.print("How many people do you want to enter? ");
+    int number = scanner.nextInt();
+    scanner.nextLine();
+
+    for (int i = 0; i < number; i++) {
+
+      System.out.println("\nEnter details for person " + (i + 1));
+
+      System.out.print("Name: ");
+      String name = scanner.nextLine();
+
+      System.out.print("Age: ");
+      int age = scanner.nextInt();
+      scanner.nextLine();
+
+      System.out.print("City: ");
+      String city = scanner.nextLine();
+
+      people.add(new Person(name, age, city));
+    }
+    // change second person
+    if (people.size() >= 2) {
+
+      Person secondPerson = people.get(1);
+      secondPerson.setName("Kevin");
+      System.out.println("The name of the second person has been changed.");// change the name
+
+    }
+
+    //  Group by age
+    Map<Integer, List<String>> groupByAge =
+            people.stream()
+                    .collect(Collectors.groupingBy(
+                            Person::getAge,
+                            Collectors.mapping(Person::getName, Collectors.toList())
+                    ));
+
+    // Group by city
+    Map<String, Long> groupByCity =
+            people.stream()
+                    .collect(Collectors.groupingBy(
+                            Person::getCity,
+                            Collectors.counting()
+                    ));
+
+    // Display results
+    System.out.println(" \n Grouped by Age: ");
+    groupByAge.forEach((age, names) ->
+            System.out.println("Age " + age + ": " + names)
+    );
+
+    System.out.println("\nGrouped by City:");
+    groupByCity.forEach((city, count) ->
+            System.out.println(city + ": " + count + " person(s)")
+    );
+
+    scanner.close();
   }
 }
