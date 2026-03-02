@@ -7,12 +7,12 @@ public class Main {
     List<Person> people = new ArrayList<>();
 
     System.out.print("How many people do you want to enter? ");
-    int number = scanner.nextInt();
+    int number_of_people = scanner.nextInt();
     scanner.nextLine();
 
-    for (int i = 0; i < number; i++) {
+    for (int i = 1; i <= number_of_people; i++) {
 
-      System.out.println("\nEnter details for person " + (i + 1));
+      System.out.println("\nEnter details for person " + (i));
 
       System.out.print("Name: ");
       String name = scanner.nextLine();
